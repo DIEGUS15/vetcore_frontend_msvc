@@ -2,6 +2,12 @@
   --color-principal-100: #7A85C1;
   --color-principal-500: #3B38A0;
   --color-secundario-100: #929292;
+  --color-mezcla-500: linear-gradient(to right, #3B38A0, #1A1950);
+}
+
+.gradiente {
+  background: var(--color-mezcla-500);
+  transition: 0.3s;
 }
 
 h1 {

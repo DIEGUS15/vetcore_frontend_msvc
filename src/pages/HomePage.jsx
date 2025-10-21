@@ -4,6 +4,8 @@ import imgIndex from "../assets/Img-inicio.png";
 import { FaPaw, FaUserMd, FaBath, FaSyringe, FaRegEye } from "react-icons/fa";
 import { MdEmergency } from "react-icons/md";
 import { IoMedicalOutline, IoBug } from "react-icons/io5";
+import CardHome from "../components/card-home"
+
 
 
 function HomePage() {
@@ -66,6 +68,13 @@ function HomePage() {
           </div>
         </section>
 
+        <section className="gradiente pt-10 pb-20 w-full">
+          <h2 className="text-white">"Pasión por la salud, amor por los animales"</h2>
+          <CardHome></CardHome>
+        </section>
+
+        
+
         <section className="flex flex-col items-start text-start bg-blue-200 w-full">
           <h2>Nuestros servicios</h2>
 
@@ -117,12 +126,7 @@ function HomePage() {
             </div>
           </div>
         </section>
-        <section>
-          <h2>"Pasión por la salud, amor por los animales"</h2>
-          <div>
-
-          </div>
-        </section>
+        
         <section>
           <h2>Ellos ya confiaron en nosotros</h2>
           <div>
