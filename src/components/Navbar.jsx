@@ -1,7 +1,7 @@
 import { NavLink, Link } from 'react-router-dom';
 import Logo from "../assets/Logo.png";
 
-function Nav() {
+function Navbar() {
   return (
     <header className="flex justify-between items-center w-full px-8 py-4">
       <NavLink to="/" className="flex items-center font-bold">
@@ -23,4 +23,4 @@ function Nav() {
   );
 }
 
-export default Nav;
+export default Navbar;

@@ -5,7 +5,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
-import Navbar from "./components/nav"
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import Products from "./pages/Products";
 
@@ -14,7 +15,6 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
       <Navbar></Navbar>
-      
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -23,6 +23,7 @@ function App() {
 
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage/></ProtectedRoute>}/>
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
     </AuthProvider>
   );

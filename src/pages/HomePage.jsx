@@ -4,8 +4,7 @@ import imgIndex from "../assets/Img-inicio.png";
 import { FaPaw, FaUserMd, FaBath, FaSyringe, FaRegEye } from "react-icons/fa";
 import { MdEmergency } from "react-icons/md";
 import { IoMedicalOutline, IoBug } from "react-icons/io5";
-import CardHome from "../components/card-home"
-
+import CardHome from "../components/Card-home"
 
 
 function HomePage() {
@@ -15,7 +14,7 @@ function HomePage() {
           <h1>Amor, cuidado y confianza</h1>
           <h3>Combinamos experiencia, tecnología y un trato humano para cuidar a tus mascotas como si fueran nuestras porque ellos lo merecen</h3>
           
-          <Link to="/login" className="flex justify-center items-center border rounded-4xl border-0 px-6 py-4 w-auto text-white text-2xl bg-[var(--color-secundario-100)] hover:bg-[var(--color-principal-100)] whitespace-nowrap shadow-[0_0_10px_black]">
+          <Link to="/login" className="flex justify-center items-center border rounded-4xl border-0 px-6 py-4 w-auto text-white text-2xl bg-[var(--color-secundario-100)] hover:bg-[var(--color-principal-100)] whitespace-nowrap shadow-[0_0_10px_black] mb-10">
             Agenda con nosotros
           </Link>
           <div className="flex justify-center text-center align-center items-center relative border rounded-4xl border-transparent -p-10 bg-[var(--color-principal-100)] overflow-visible">
@@ -73,8 +72,6 @@ function HomePage() {
           <CardHome></CardHome>
         </section>
 
-        
-
         <section className="flex flex-col items-start text-start bg-blue-200 w-full">
           <h2>Nuestros servicios</h2>
 
@@ -127,14 +124,14 @@ function HomePage() {
           </div>
         </section>
         
-        <section>
+        <section className="flex flex-col w-full bg-yellow-200">
           <h2>Ellos ya confiaron en nosotros</h2>
           <div>
           
           </div>
         </section>
-        <section>
-          <div>
+        <section className="flex flex-row justify-center text-center w-full bg-gray-200">
+          <div className="flex flex-col w-full text-center justify-center pt-10 pb-10 bg-blue-200">
             <h2>Encuentranos aquí</h2>
             <h4>Quinta Oriental Cúcuta, Norte de Santnder 54001 Calle 2N No 9E-61 Govika</h4>
             <Link to="/login" className="border rounded-4xl px-5 py-4 text-white text-sm bg-[var(--color-principal-500)] hover:bg-[var(--color-principal-100)] transition whitespace-nowrap">
@@ -142,8 +139,8 @@ function HomePage() {
             </Link>
             <h4>O contactanos por medio de nuestras redes sociales</h4>
           </div>
-          <div>
-            /**ubicacion en google maps**/
+          <div className="flex items-center justify-center bg-green-300 w-full">
+            ubicacion en google maps
           </div>
         </section>
     </div>
