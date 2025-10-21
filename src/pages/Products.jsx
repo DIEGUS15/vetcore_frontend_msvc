@@ -1,7 +1,6 @@
-
-function Products(){
+function Products () {
     return (
-        <div>
+        <div className="flex text-black">
             Products
         </div>
     )

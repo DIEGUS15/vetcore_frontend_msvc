@@ -12,7 +12,7 @@ function Nav() {
         <NavLink to="/" className="text-sm hover:text-stone-400">Inicio</NavLink>
         <NavLink to="/nosotros" className="text-sm hover:text-stone-400">Nosotros</NavLink>
         <NavLink to="/servicios" className="text-sm hover:text-stone-400">Servicios</NavLink>
-        <NavLink to="/productos" className="text-sm hover:text-stone-400">Productos</NavLink>
+        <NavLink to="/products" className="text-sm hover:text-stone-400">Productos</NavLink>
         <NavLink to="/contacto" className="text-sm hover:text-stone-400">Contacto</NavLink>
       </nav>
 
