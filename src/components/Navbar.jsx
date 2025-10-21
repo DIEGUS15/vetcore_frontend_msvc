@@ -10,10 +10,10 @@ function Navbar() {
 
       <nav className="flex gap-6">
         <NavLink to="/" className="text-sm hover:text-stone-400">Inicio</NavLink>
-        <NavLink to="/nosotros" className="text-sm hover:text-stone-400">Nosotros</NavLink>
-        <NavLink to="/servicios" className="text-sm hover:text-stone-400">Servicios</NavLink>
+        <a href="#about" className="text-sm hover:text-stone-400">Nosotros</a>
+        <a href="#services" className="text-sm hover:text-stone-400">Servicios</a>
         <NavLink to="/products" className="text-sm hover:text-stone-400">Productos</NavLink>
-        <NavLink to="/contacto" className="text-sm hover:text-stone-400">Contacto</NavLink>
+        <a href="#contact" className="text-sm hover:text-stone-400">Contacto</a>
       </nav>
 
       <Link to="/login" className="border rounded-4xl px-5 py-4 text-white text-sm bg-[var(--color-principal-500)] hover:bg-[var(--color-principal-100)] transition whitespace-nowrap">
