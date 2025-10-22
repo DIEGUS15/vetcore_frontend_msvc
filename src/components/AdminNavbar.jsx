@@ -44,6 +44,31 @@ const AdminNavbar = () => {
             Dashboard
           </NavLink>
 
+          <NavLink
+            to="/pets"
+            className={({ isActive }) =>
+              `admin-nav-link ${isActive ? "active" : ""}`
+            }
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="5" r="3" />
+              <circle cx="6" cy="15" r="2" />
+              <circle cx="18" cy="15" r="2" />
+              <circle cx="12" cy="18" r="2" />
+              <path d="M12 8v2" />
+            </svg>
+            Mascotas
+          </NavLink>
+
           {user?.role === "admin" && (
             <NavLink
               to="/users"

@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
   const noLayoutRoutes = ["/login", "/register"];
 
   // Rutas protegidas que deben mostrar el AdminNavbar
-  const protectedRoutes = ["/dashboard", "/users"];
+  const protectedRoutes = ["/dashboard", "/users", "/pets"];
 
   const isNoLayoutRoute = noLayoutRoutes.includes(location.pathname);
   const isProtectedRoute = protectedRoutes.includes(location.pathname);
