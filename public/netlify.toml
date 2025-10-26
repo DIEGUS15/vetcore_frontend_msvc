@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/apig/*"
+  to = "http://35.209.64.222:8000/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

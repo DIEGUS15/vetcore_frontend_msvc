@@ -1,0 +1,25 @@
+# Docker Compose para desarrollo independiente del Frontend
+# Nota: El frontend normalmente se ejecuta con 'npm run dev' en desarrollo
+# Este compose es útil para probar el build de producción
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vetcore_frontend_dev
+    ports:
+      - "5173:5173"
+    environment:
+      # El frontend se conecta al API Gateway
+      VITE_API_URL: http://localhost:8000
+    networks:
+      - frontend-network
+    # Para desarrollo con hot-reload, descomentar:
+    # volumes:
+    #   - ./src:/app/src
+    #   - /app/node_modules
+
+networks:
+  frontend-network:
+    driver: bridge
