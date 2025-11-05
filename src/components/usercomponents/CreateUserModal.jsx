@@ -5,7 +5,6 @@ const CreateUserModal = ({ isOpen, onClose, onCreate }) => {
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
-    password: "",
     telephone: "",
     address: "",
     roleName: "client",
@@ -33,7 +32,6 @@ const CreateUserModal = ({ isOpen, onClose, onCreate }) => {
       setFormData({
         fullname: "",
         email: "",
-        password: "",
         telephone: "",
         address: "",
         roleName: "client",
@@ -69,6 +67,12 @@ const CreateUserModal = ({ isOpen, onClose, onCreate }) => {
           <div className="modal-body">
             {error && <div className="form-error">{error}</div>}
 
+            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg mb-4">
+              <p className="text-sm">
+                ℹ️ Se generará automáticamente una contraseña temporal que será enviada al correo del usuario.
+              </p>
+            </div>
+
             <div className="form-group">
               <label className="form-label">
                 Nombre Completo<span className="required">*</span>
@@ -96,22 +100,6 @@ const CreateUserModal = ({ isOpen, onClose, onCreate }) => {
                 onChange={handleChange}
                 placeholder="correo@ejemplo.com"
                 required
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">
-                Contraseña Temporal<span className="required">*</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                className="form-input"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Ingrese una contraseña temporal"
-                required
-                minLength={6}
               />
             </div>
 

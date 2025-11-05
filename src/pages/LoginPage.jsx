@@ -8,14 +8,17 @@ const LoginPage = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const { signin, isAuthenticated, errors } = useAuth();
+  const { signin, isAuthenticated, errors, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    // Solo redirigir si ya está autenticado y no necesita cambiar contraseña
+    if (isAuthenticated && user && !user.mustChangePassword) {
       navigate("/dashboard");
+    } else if (isAuthenticated && user && user.mustChangePassword) {
+      navigate("/change-password");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,8 +32,14 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      await signin(formData);
-      navigate("/dashboard");
+      const result = await signin(formData);
+
+      // Verificar si el usuario debe cambiar su contraseña
+      if (result?.data?.user?.mustChangePassword) {
+        navigate("/change-password");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Login error:", error);
     } finally {

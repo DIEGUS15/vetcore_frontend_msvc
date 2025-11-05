@@ -7,3 +7,6 @@ export const loginRequest = (credentials) =>
   axiosInstance.post("/auth/login", credentials);
 
 export const verifyTokenRequest = () => axiosInstance.get("/auth/verify");
+
+export const changePasswordRequest = (passwordData) =>
+  axiosInstance.post("/auth/change-password", passwordData);

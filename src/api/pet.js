@@ -41,3 +41,11 @@ export const updatePetRequest = (id, petData) =>
  */
 export const deletePetRequest = (id) =>
   axiosInstance.delete(`/patients/pets/${id}`);
+
+/**
+ * Get users/owners from Auth Service (via Patients Service)
+ * @param {string} [role] - Filter by role (e.g., 'client')
+ * @returns {Promise} - Promise with users data
+ */
+export const getOwnersRequest = (role = "client") =>
+  axiosInstance.get(`/patients/users?role=${role}`);

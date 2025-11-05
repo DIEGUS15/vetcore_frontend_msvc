@@ -12,6 +12,7 @@ import UserPage from "./pages/UserPage";
 import PetsPage from "./pages/PetsPage";
 import HomePage from "./pages/HomePage";
 import Products from "./pages/Products";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 function App() {
   return (
@@ -25,6 +26,15 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/products" element={<Products />} />
+
+                <Route
+                  path="/change-password"
+                  element={
+                    <ProtectedRoute>
+                      <ChangePasswordPage />
+                    </ProtectedRoute>
+                  }
+                />
 
                 <Route
                   path="/dashboard"

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getOwnersRequest } from "../../api/pet.js";
 import "../../styles/Modal.css";
 
 const UpdatePetModal = ({ isOpen, onClose, onUpdate, pet }) => {
@@ -14,6 +15,8 @@ const UpdatePetModal = ({ isOpen, onClose, onUpdate, pet }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [owners, setOwners] = useState([]);
+  const [loadingOwners, setLoadingOwners] = useState(false);
 
   useEffect(() => {
     if (pet) {
@@ -29,6 +32,28 @@ const UpdatePetModal = ({ isOpen, onClose, onUpdate, pet }) => {
       });
     }
   }, [pet]);
+
+  // Cargar la lista de owners cuando se abre el modal
+  useEffect(() => {
+    const fetchOwners = async () => {
+      if (isOpen) {
+        setLoadingOwners(true);
+        try {
+          const response = await getOwnersRequest("client");
+          if (response.data.success) {
+            setOwners(response.data.data);
+          }
+        } catch (err) {
+          console.error("Error loading owners:", err);
+          setError("No se pudieron cargar los dueños disponibles");
+        } finally {
+          setLoadingOwners(false);
+        }
+      }
+    };
+
+    fetchOwners();
+  }, [isOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,17 +154,33 @@ const UpdatePetModal = ({ isOpen, onClose, onUpdate, pet }) => {
 
             <div className="form-group">
               <label className="form-label">
-                Nombre del Dueño<span className="required">*</span>
+                Dueño de la Mascota<span className="required">*</span>
               </label>
-              <input
-                type="text"
+              <select
                 name="owner"
-                className="form-input"
+                className="form-select"
                 value={formData.owner}
                 onChange={handleChange}
-                placeholder="Nombre completo del dueño"
                 required
-              />
+                disabled={loadingOwners}
+              >
+                <option value="">
+                  {loadingOwners
+                    ? "Cargando dueños..."
+                    : "Seleccionar dueño..."}
+                </option>
+                {owners.map((owner) => (
+                  <option key={owner.id} value={owner.email}>
+                    {owner.fullname} ({owner.email})
+                  </option>
+                ))}
+              </select>
+              {owners.length === 0 && !loadingOwners && (
+                <small style={{ color: "#e53e3e", fontSize: "0.875rem" }}>
+                  No hay clientes registrados. Por favor, registre un cliente
+                  primero.
+                </small>
+              )}
             </div>
 
             <div className="form-group">
