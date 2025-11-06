@@ -1,0 +1,102 @@
+/* Specific styles for Create Appointment Modal */
+
+.appointment-modal-content {
+  max-width: 650px;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-textarea::placeholder {
+  color: #a0aec0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-hint {
+  font-size: 0.875rem;
+  color: #718096;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.form-field-error {
+  border-color: #e53e3e !important;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1) !important;
+}
+
+.form-error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.appointment-icon-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select-placeholder {
+  color: #a0aec0;
+}
+
+.loading-options {
+  color: #718096;
+  font-style: italic;
+}
+
+.no-options {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #fff5f5;
+  border-left: 3px solid #e53e3e;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: #38a169;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #f0fff4;
+  border-left: 3px solid #38a169;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .appointment-modal-content {
+    max-width: 100%;
+  }
+}
