@@ -1,4 +1,5 @@
 import { useAuth } from "../context/AuthContext";
+import VetSchedule from "../components/VetSchedule";
 
 const DashboardPage = () => {
   const { user } = useAuth();
@@ -72,6 +73,15 @@ const DashboardPage = () => {
               </div>
             </div>
           </div>
+
+          {user?.role === 'veterinarian' && (
+            <div className="mt-8 border-t border-gray-200 pt-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                Mi Horario del Día
+              </h3>
+              <VetSchedule vetId={user.id} />
+            </div>
+          )}
 
           <div className="mt-8 p-6 bg-indigo-50 rounded-lg border border-indigo-200">
             <h4 className="text-lg font-semibold text-indigo-900 mb-2">

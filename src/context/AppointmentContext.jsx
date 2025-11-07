@@ -4,6 +4,8 @@ import {
   createAppointmentRequest,
   getVeterinariansRequest,
 } from "../api/appointment.js";
+import { getSchedule } from "../api/schedule";
+import { useAuth } from "./AuthContext";
 
 const AppointmentContext = createContext();
 
@@ -16,6 +18,7 @@ export const useAppointment = () => {
 };
 
 export const AppointmentProvider = ({ children }) => {
+  const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [veterinarians, setVeterinarians] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,7 +42,41 @@ export const AppointmentProvider = ({ children }) => {
       // Merge params with current filters
       const queryParams = { ...filters, ...params };
 
-      const res = await getAppointmentsRequest(queryParams);
+      let res;
+
+      // If the authenticated user is a veterinarian, fetch schedule from schedule service
+      if (user?.role === "veterinarian") {
+        try {
+          const scheduleData = await getSchedule(user.id);
+          // scheduleData may be an array or an object with items
+          const items = Array.isArray(scheduleData)
+            ? scheduleData
+            : scheduleData?.items || scheduleData?.data || [];
+
+          // Map schedule items to the appointment shape expected by the UI
+          const mapped = items.map((it) => ({
+            appointmentId: it.appointmentId || it.id,
+            fecha: it.date || it.fecha,
+            hora: it.slotTime || it.hora,
+            motivo: it.reason || it.motivo,
+            status: (it.status || "").toLowerCase(),
+            petName: it.petName || it.pet || "-",
+            veterinarianName: user.fullname || "",
+          }));
+
+          setAppointments(mapped || []);
+          return { data: mapped };
+        } catch (error) {
+          const errorMessage =
+            error.response?.data?.message || "Error al obtener el horario del veterinario";
+          setErrors(errorMessage);
+          console.error("Error fetching schedule for veterinarian:", error);
+          throw error;
+        }
+      }
+
+      // Default: call appointments service
+      res = await getAppointmentsRequest(queryParams);
 
       if (res.data) {
         setAppointments(res.data.data || []);

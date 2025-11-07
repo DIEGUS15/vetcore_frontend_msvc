@@ -10,13 +10,16 @@ import axiosInstance from "./axios.js";
 export const getAppointmentsRequest = (params = {}) => {
   const queryParams = new URLSearchParams();
 
-  if (params.status) {
-    queryParams.append("status", params.status);
-  }
-
-  if (params.includeInactive) {
-    queryParams.append("includeInactive", "true");
-  }
+  // Append any provided param to the query string
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === null || value === undefined) return;
+    // For booleans, append explicit 'true'/'false'
+    if (typeof value === "boolean") {
+      queryParams.append(key, value ? "true" : "false");
+      return;
+    }
+    queryParams.append(key, String(value));
+  });
 
   const queryString = queryParams.toString();
   const url = queryString ? `/appointments?${queryString}` : "/appointments";
