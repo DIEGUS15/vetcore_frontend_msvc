@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { getOwnersRequest } from "../../api/pet.js";
+import { useAuth } from "../../context/AuthContext";
 import "../../styles/Modal.css";
 
 const CreatePetModal = ({ isOpen, onClose, onCreate }) => {
+  const { user: currentUser } = useAuth();
   const [formData, setFormData] = useState({
     photo: "",
     petName: "",
@@ -18,10 +20,10 @@ const CreatePetModal = ({ isOpen, onClose, onCreate }) => {
   const [owners, setOwners] = useState([]);
   const [loadingOwners, setLoadingOwners] = useState(false);
 
-  // Cargar la lista de owners cuando se abre el modal
+  // Cargar la lista de owners cuando se abre el modal (solo para admin/veterinarian)
   useEffect(() => {
     const fetchOwners = async () => {
-      if (isOpen) {
+      if (isOpen && currentUser?.role !== "client") {
         setLoadingOwners(true);
         try {
           const response = await getOwnersRequest("client");
@@ -38,7 +40,17 @@ const CreatePetModal = ({ isOpen, onClose, onCreate }) => {
     };
 
     fetchOwners();
-  }, [isOpen]);
+  }, [isOpen, currentUser]);
+
+  // Auto-asignar owner si el usuario es cliente
+  useEffect(() => {
+    if (isOpen && currentUser?.role === "client") {
+      setFormData((prev) => ({
+        ...prev,
+        owner: currentUser.email,
+      }));
+    }
+  }, [isOpen, currentUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -143,36 +155,39 @@ const CreatePetModal = ({ isOpen, onClose, onCreate }) => {
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">
-                Dueño de la Mascota<span className="required">*</span>
-              </label>
-              <select
-                name="owner"
-                className="form-select"
-                value={formData.owner}
-                onChange={handleChange}
-                required
-                disabled={loadingOwners}
-              >
-                <option value="">
-                  {loadingOwners
-                    ? "Cargando dueños..."
-                    : "Seleccionar dueño..."}
-                </option>
-                {owners.map((owner) => (
-                  <option key={owner.id} value={owner.email}>
-                    {owner.fullname} ({owner.email})
+            {/* Solo mostrar selector de owner para admin/veterinarian */}
+            {currentUser?.role !== "client" && (
+              <div className="form-group">
+                <label className="form-label">
+                  Dueño de la Mascota<span className="required">*</span>
+                </label>
+                <select
+                  name="owner"
+                  className="form-select"
+                  value={formData.owner}
+                  onChange={handleChange}
+                  required
+                  disabled={loadingOwners}
+                >
+                  <option value="">
+                    {loadingOwners
+                      ? "Cargando dueños..."
+                      : "Seleccionar dueño..."}
                   </option>
-                ))}
-              </select>
-              {owners.length === 0 && !loadingOwners && (
-                <small style={{ color: "#e53e3e", fontSize: "0.875rem" }}>
-                  No hay clientes registrados. Por favor, registre un cliente
-                  primero.
-                </small>
-              )}
-            </div>
+                  {owners.map((owner) => (
+                    <option key={owner.id} value={owner.email}>
+                      {owner.fullname} ({owner.email})
+                    </option>
+                  ))}
+                </select>
+                {owners.length === 0 && !loadingOwners && (
+                  <small style={{ color: "#e53e3e", fontSize: "0.875rem" }}>
+                    No hay clientes registrados. Por favor, registre un cliente
+                    primero.
+                  </small>
+                )}
+              </div>
+            )}
 
             <div className="form-group">
               <label className="form-label">Especie</label>

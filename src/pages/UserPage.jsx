@@ -5,7 +5,7 @@ import { useUser } from "../context/UserContext";
 import UserTable from "../components/usercomponents/UserTable";
 import CreateUserModal from "../components/usercomponents/CreateUserModal";
 import UpdateUserModal from "../components/usercomponents/UpdateUserModal";
-import "../styles/UserPage.css";
+import { FiUsers } from "react-icons/fi";
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -60,61 +60,70 @@ const UserPage = () => {
   };
 
   return (
-    <div className="user-page">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
-      <div className="user-page-container">
-        <div className="user-page-header">
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
+            <FiUsers className="text-white text-xl" />
+          </div>
           <div>
-            <h1 className="user-page-title">Gestión de Usuarios</h1>
-            <p className="user-page-subtitle">
+            <h1 className="text-3xl font-bold text-slate-900">Gestión de Usuarios</h1>
+            <p className="text-slate-600">
               Administra todos los usuarios del sistema VetCore
             </p>
           </div>
         </div>
+      </div>
 
-        {/* Content */}
-        <div className="user-page-content">
-          <div className="user-page-actions">
-            <div></div>
-            <button
-              className="btn-create-user"
-              onClick={() => setIsCreateModalOpen(true)}
-              disabled={loading}
-            >
-              <span style={{ fontSize: "1.25rem" }}>+</span>
-              Crear Nuevo Usuario
-            </button>
-          </div>
-
-          {errors && (
-            <div className="error-container">
-              <div className="error-message">{errors}</div>
-            </div>
-          )}
-
-          {loading && users.length === 0 ? (
-            <div className="loading-container">
-              <div className="loading-spinner"></div>
-              <p style={{ marginTop: "1rem", color: "#718096" }}>
-                Cargando usuarios...
-              </p>
-            </div>
-          ) : users.length === 0 ? (
-            <div className="no-users-message">
-              <p>No hay usuarios registrados en el sistema.</p>
-              <p>Haz clic en "Crear Nuevo Usuario" para agregar uno.</p>
-            </div>
-          ) : (
-            <UserTable
-              users={users}
-              pagination={pagination}
-              onEdit={handleEditClick}
-              onDelete={handleDeleteUser}
-              onPageChange={handlePageChange}
-              loading={loading}
-            />
-          )}
+      {/* Content */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {/* Actions Bar */}
+        <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+          <div></div>
+          <button
+            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            onClick={() => setIsCreateModalOpen(true)}
+            disabled={loading}
+          >
+            <span className="text-xl">+</span>
+            Crear Nuevo Usuario
+          </button>
         </div>
+
+        {/* Error Message */}
+        {errors && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <p className="text-red-700 font-medium">{errors}</p>
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading && users.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="mt-4 text-slate-600">Cargando usuarios...</p>
+          </div>
+        ) : users.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FiUsers className="text-slate-400 text-2xl" />
+            </div>
+            <p className="text-slate-600 mb-2">No hay usuarios registrados en el sistema.</p>
+            <p className="text-slate-500 text-sm">
+              Haz clic en "Crear Nuevo Usuario" para agregar uno.
+            </p>
+          </div>
+        ) : (
+          <UserTable
+            users={users}
+            pagination={pagination}
+            onEdit={handleEditClick}
+            onDelete={handleDeleteUser}
+            onPageChange={handlePageChange}
+            loading={loading}
+          />
+        )}
       </div>
 
       {/* Modals */}

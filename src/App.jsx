@@ -12,6 +12,10 @@ import DashboardPage from "./pages/DashboardPage";
 import UserPage from "./pages/UserPage";
 import PetsPage from "./pages/PetsPage";
 import AppointmentsPage from "./pages/AppointmentsPage";
+import VeterinarianSchedulePage from "./pages/VeterinarianSchedulePage";
+import VeterinarianDashboardPage from "./pages/VeterinarianDashboardPage";
+import MedicalAttentionPage from "./pages/MedicalAttentionPage";
+import ClientMedicalHistoryPage from "./pages/ClientMedicalHistoryPage";
 import HomePage from "./pages/HomePage";
 import Products from "./pages/Products";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
@@ -71,6 +75,42 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <AppointmentsPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/schedule"
+                  element={
+                    <ProtectedRoute>
+                      <VeterinarianSchedulePage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/appointments/:appointmentId/medical-attention"
+                  element={
+                    <ProtectedRoute>
+                      <MedicalAttentionPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/my-pets/:petId/medical-history"
+                  element={
+                    <ProtectedRoute>
+                      <ClientMedicalHistoryPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/veterinarian-dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <VeterinarianDashboardPage />
                     </ProtectedRoute>
                   }
                 />

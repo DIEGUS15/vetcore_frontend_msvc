@@ -12,7 +12,14 @@ const Layout = ({ children }) => {
   const noLayoutRoutes = ["/login", "/register"];
 
   // Rutas protegidas que deben mostrar el AdminNavbar
-  const protectedRoutes = ["/dashboard", "/users", "/pets"];
+  const protectedRoutes = [
+    "/dashboard",
+    "/users",
+    "/pets",
+    "/appointments",
+    "/schedule",
+    "/change-password",
+  ];
 
   const isNoLayoutRoute = noLayoutRoutes.includes(location.pathname);
   const isProtectedRoute = protectedRoutes.includes(location.pathname);
@@ -25,10 +32,12 @@ const Layout = ({ children }) => {
   // Si es una ruta protegida y el usuario está autenticado, mostrar AdminNavbar
   if (isProtectedRoute && isAuthenticated) {
     return (
-      <>
+      <div className="min-h-screen bg-slate-50">
         <AdminNavbar />
-        {children}
-      </>
+        <main className="w-full">
+          {children}
+        </main>
+      </div>
     );
   }
 

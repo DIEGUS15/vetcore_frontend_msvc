@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/PetTable.css";
 
 const PetTable = ({ pets, pagination, onEdit, onDelete, onPageChange, loading }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [deletingId, setDeletingId] = useState(null);
 
   // Check if user can edit/delete (admin or receptionist)
@@ -71,7 +73,7 @@ const PetTable = ({ pets, pagination, onEdit, onDelete, onPageChange, loading })
               <th>Peso (kg)</th>
               <th>Sexo</th>
               <th>Dueño</th>
-              {canModify && <th>Acciones</th>}
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -101,26 +103,36 @@ const PetTable = ({ pets, pagination, onEdit, onDelete, onPageChange, loading })
                   </span>
                 </td>
                 <td>{pet.owner || "N/A"}</td>
-                {canModify && (
-                  <td>
-                    <div className="pet-actions">
-                      <button
-                        className="btn-action btn-edit"
-                        onClick={() => onEdit(pet)}
-                        disabled={loading}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="btn-action btn-delete"
-                        onClick={() => handleDelete(pet.petId, pet.petName)}
-                        disabled={deletingId === pet.petId || loading}
-                      >
-                        {deletingId === pet.petId ? "Eliminando..." : "Eliminar"}
-                      </button>
-                    </div>
-                  </td>
-                )}
+                <td>
+                  <div className="pet-actions">
+                    <button
+                      className="btn-action btn-view"
+                      onClick={() => navigate(`/my-pets/${pet.petId}/medical-history`)}
+                      disabled={loading}
+                      style={{ backgroundColor: '#3b82f6', color: 'white' }}
+                    >
+                      Ver Historial
+                    </button>
+                    {canModify && (
+                      <>
+                        <button
+                          className="btn-action btn-edit"
+                          onClick={() => onEdit(pet)}
+                          disabled={loading}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="btn-action btn-delete"
+                          onClick={() => handleDelete(pet.petId, pet.petName)}
+                          disabled={deletingId === pet.petId || loading}
+                        >
+                          {deletingId === pet.petId ? "Eliminando..." : "Eliminar"}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

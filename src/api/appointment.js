@@ -38,9 +38,31 @@ export const createAppointmentRequest = (appointmentData) =>
   axiosInstance.post("/appointments", appointmentData);
 
 /**
+ * Get veterinarian schedule for a specific date
+ * @param {string} fecha - Date in YYYY-MM-DD format (optional, defaults to today)
+ * @returns {Promise} - Promise with veterinarian schedule data
+ */
+export const getVeterinarianScheduleRequest = (fecha = null) => {
+  const queryParams = fecha ? `?fecha=${fecha}` : "";
+  return axiosInstance.get(`/appointments/veterinarian/schedule${queryParams}`);
+};
+
+/**
  * Get veterinarians from Auth Service
  * This will be used to populate the veterinarian dropdown when creating an appointment
  * @returns {Promise} - Promise with veterinarians data
  */
 export const getVeterinariansRequest = () =>
   axiosInstance.get("/users/veterinarians/list");
+
+/**
+ * Update appointment attention (procedure, diagnosis, indications)
+ * @param {number} appointmentId - Appointment ID
+ * @param {Object} attentionData - Attention data
+ * @param {string} [attentionData.procedimiento] - Procedure performed
+ * @param {string} [attentionData.diagnostico] - Diagnosis
+ * @param {string} [attentionData.indicaciones] - Indications to follow
+ * @returns {Promise} - Promise with updated appointment data
+ */
+export const updateAppointmentAttentionRequest = (appointmentId, attentionData) =>
+  axiosInstance.put(`/appointments/${appointmentId}/attention`, attentionData);
