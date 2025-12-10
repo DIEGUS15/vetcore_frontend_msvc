@@ -18,6 +18,44 @@ const ClientMedicalHistoryPage = () => {
     fetchData();
   }, [petId]);
 
+  const handleDownloadPDF = async (recordId) => {
+    try {
+      const response = await axios.get(`/appointments/medical-records/${recordId}/pdf`, {
+        responseType: 'blob'
+      });
+
+      // Verificar si la respuesta es realmente un PDF
+      const contentType = response.headers['content-type'];
+      console.log('Content-Type:', contentType);
+      console.log('Response data type:', response.data.type);
+      console.log('Response data size:', response.data.size);
+
+      // Si es JSON significa que hubo un error
+      if (contentType && contentType.includes('application/json')) {
+        const text = await response.data.text();
+        const errorData = JSON.parse(text);
+        console.error('Error del servidor:', errorData);
+        alert(`Error: ${errorData.message || 'Error al generar el PDF'}`);
+        return;
+      }
+
+      // Crear un blob y descargarlo
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `registro-medico-${recordId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error al descargar PDF:', error);
+      console.error('Error completo:', error.response);
+      alert(`Error al descargar el PDF: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -240,7 +278,7 @@ const ClientMedicalHistoryPage = () => {
                           </div>
                           <div className="flex gap-2">
                             <button
-                              onClick={() => window.open(`${axios.defaults.baseURL}/medical-records/${record.recordId}/pdf`, '_blank')}
+                              onClick={() => handleDownloadPDF(record.recordId)}
                               className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                             >
                               Descargar PDF

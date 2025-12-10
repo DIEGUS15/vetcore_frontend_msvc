@@ -19,10 +19,19 @@ const Layout = ({ children }) => {
     "/appointments",
     "/schedule",
     "/change-password",
+    "/veterinarian-dashboard",
+  ];
+
+  // Patrones de rutas protegidas con parámetros dinámicos
+  const protectedRoutePatterns = [
+    /^\/my-pets\/\d+\/medical-history$/,
+    /^\/appointments\/\d+\/medical-attention$/,
   ];
 
   const isNoLayoutRoute = noLayoutRoutes.includes(location.pathname);
-  const isProtectedRoute = protectedRoutes.includes(location.pathname);
+  const isProtectedRoute =
+    protectedRoutes.includes(location.pathname) ||
+    protectedRoutePatterns.some(pattern => pattern.test(location.pathname));
 
   // Si es una ruta sin layout, solo mostrar el contenido
   if (isNoLayoutRoute) {
